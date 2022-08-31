@@ -1,0 +1,298 @@
+
+# NaturPoint
+
+Simple desktop application to manage a store of ecological and proximity products.
+
+
+
+
+
+
+
+
+## Screenshots
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/sp.png?raw=true)
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/naturpoint.png?raw=true)
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/np2.png?raw=true)
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/np3.png?raw=true)
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/login.png?raw=true)
+
+
+
+
+
+
+
+
+## Features
+
+- Define the structure of a desktop application in Maven.
+- Introduce an ORM that performs the persistence of the entities that make up the application.
+- Design a CRUD that performs operations on the database.
+- Perform user authentication.
+
+
+## Requirements
+
+- Maven
+- Java 11
+- JDK 11 (Oracle or OpenJDK)
+- Hibernate
+- MySql
+
+
+## Installation
+
+To download the code it is necessary to make a local copy of the repository, for that we execute the following command in the console:
+
+```bash
+  git-clone https://github.com/AlPrats/NaturPoint.git
+```
+
+Once this is done, we can now open the project and execute the code in our preferred editor.
+
+
+## Caution
+
+- The database needs to be created and running for the app to be able to communicate with it, otherwise there will be a runtime error.
+- The data in the "hibernate.cfg.xml" file must be in accordance with the user data of the database server for the connection to be successful.
+
+```bash
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://127.0.0.1:3306/natur_point</property>
+        <property name="connection.username">your_username</property>
+        <property name="connection.password">your_password</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL55Dialect</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <mapping class="entities.Category"/>
+        <mapping class="entities.Customer"/>
+        <mapping class="entities.Product"/>
+        <mapping class="entities.Order"/>
+        <mapping class="entities.OrderDetails"/>
+        <mapping class="entities.User"/>
+    </session-factory>
+</hibernate-configuration>
+```
+
+## Methodology used
+
+### Waterfall Model
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/cascada.png?raw=true)
+
+The waterfall model is a sequential development methodology used in software development.
+This methodology consists of a series of stages whose purpose is to separate the development processes and in which it is only possible to move on to the next phase when the previous one has been completed.
+
+
+## E/R Diagram
+
+The purpose of entity-relationship diagrams is to show how the entities that make up a system are related to each other and to elaborate the design of the relational database of the system to be implemented.
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/er.png?raw=true)
+
+In the previous image, the entity-relationship diagram used for the development of the system is shown and the entities are named along with their attributes and the relationships between said entities.
+
+
+## Class Diagram
+
+A class diagram is used to define the structure of the system and show the relationships (composition, association, and aggregation) between the elements that make up the application.
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/diagrama_clases.png?raw=true)
+
+Aggregation is a type of association that indicates that a class is part of another class (weak composition). Components can be shared by multiple compounds (from the same aggregation association or from several different aggregation associations). The destruction of the compound does not entail the destruction of the components.
+
+
+## Structure of a Java project with Maven
+
+When carrying out a project in Maven, we must know that one of its main characteristics is that it works on the convention over configuration (CoC) pattern.
+
+This means that when creating the project, Maven will generate a folder structure in which we must specifically place the classes contained in the application, the tests carried out on the modules or the resources included so that Maven can manage them correctly.
+
+Next, the structure of folders generated by Illustration 12. Estr.Maven Maven and those that have been additionally included by itself are detailed.
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/estructuramaven.png?raw=true)
+
+**src/main/java** All classes with a .java extension will be stored in this folder. In it, a new package substructure is made to separate the different layers that make up the application. These packages are:
+     
+  - **classes** This includes the .java classes that have been implemented to offer solutions to the different scenarios that arise in the development of the project.
+  - **DisplayItem.java** Class that has been coded under the need to be able to display a comboBox in the graphical interface with the list of categories stored in the database.
+  - **MyTable.java** This class is responsible for creating the different tables that are displayed in the graphical interface. We will be able to show the information stored in the database and interact with it to be able to carry out editing or deleting operations on objects, among other functionalities.
+  - **Picture.java** Class implemented to offer a solution for inserting images in the DB. It will be used to fulfill the picture attribute of the Product entity.
+  - **entities** This package includes all the .java classes that are to be persisted • and that have been defined in the E/R diagram. These classes are:
+     Category, Customer, Order, OrderDetails, Product, and User.
+  - **repository** Package that will contain an interface and a series of java classes that will implement the methods inherited from said interface. Each entity mentioned in the above package will have its own repository. Therefore, in this package we will have a CategoryRepository, CustomerRepository, OrderRepository, OrderDetailsRepository, ProductRepository and UserRepository.
+       
+       In summary, we can say that these repositories will be in charge of carrying out the transactions against the database
+  - **view** Last package that is included in the src/main/java folder. It includes all the classes that make up the graphical interface and in which the user can interact with the application. These classes are:
+       AddProduct, Categories, Customers, EditProduct, Home, Login, Orders, Products, ProductsInCategory, ShowOrders.
+
+**src/main/resources** This folder stores the necessary resources that may be required by the.java classes that make up the project or the configuration files required for its correct operation.
+  
+  - **images** Package containing the images included in the project.
+  - **“hibernate.cfg.xml”** Hibernate configuration file.
+
+**src/test/java** Folder that contains the unit tests performed on the classes in JUnit.
+
+**target/classes** In this folder the.java classes obtained by the compilation of the sources saved in src/main/java are stored.
+
+**pom.xml** The Project Object Model (POM) file handles the management and construction of Maven-based projects. Inside, it includes a list with the essential dependencies for the program to work and a series of requirements defined at the beginning of the project, which are shown below.
+
+  - **project** Document root xml.
+  - **GroupId** The ID of the project group, which is com.albert.
+  - **ArtifactId** The identification of the artifact (project) which in this case is NaturPoint.
+  - **Version** The version of the artifact, in this case it is 1.0-SNAPSHOT.
+
+
+## Construction of the database by mapping to entities (package entities)
+
+For the construction of the database, the Hibernate framework and the persistence offered by said tool will be used.
+
+However, before starting to detail the persistence process of a class, it is essential to configure the framework itself through a configuration file called “hibernate.cfg.xml”.
+The location of this file must be in the src folder of the project itself, In it, you must configure the data of the connection to the database and the location of the classes that you want to persist, among other aspects.
+
+The information contained in this file and its corresponding structure is detailed below:
+
+  - **<hibernate-configuration>** It is the root of the xml document and within it, the <session-factory> tag is located, which will be in charge of containing all the Hibernate configuration.
+  - **<property>** All declarations beginning with the <property> tag mean that they are configuration properties. Its content defines the value of the property and the name attribute, its name. Among them, we find the following:
+    
+    **“connection.url”** Contains the connection url to the DB.
+    
+    **“connection.username”** Refers to the database user.
+       
+    **“connection.password”** Refers to the user's password in the DB.
+       
+    **“dialect”** This property specifies the SQL language that Hibernate will use against the DB.
+       
+    **“connection.driver_class”** Refers to the DB driver to use.
+       
+    **“hibernate.hbm2dd.auto”** The value entered in this parameter will tell Hibernate what action to execute. In the case of marking it as true, Hibernate will create the table structure in the database.
+       
+    **“hibernate.show_sql”** Shows on the console the sql that Hibernate executes against the DB.
+       
+    **“hibernate.current_session_context_class”** In short, its function is to release the session from the running thread at the end of any transaction against the DB.
+
+  - **<mapping>** The purpose of using this tag is to indicate to Hibernate the class to be mapped. It is accompanied by the class attribute, in which the package to which said class belongs and its name must be specified so that it can be persisted.
+
+## Entity mapping
+
+Then, the steps to follow for the persistence of an entity (Class.java) in the database are detailed.
+
+### The Java class
+
+To be able to persist a Java class through the use of annotations, it is necessary to fulfill a mandatory requirement and two optional ones. These requirements are:
+
+  - The class to be persisted must have a constructor with a public access modifier and contain no arguments.
+  - For each property that you want to persist, you must have a corresponding get / set method associated with it. This requirement is mandatory if the mapping is done using ".hbm.xml" mapping files, but since it is done through the use of annotations on the class properties, the use of the get / set methods are totally unnecessary for this purpose.
+  - Each class must implement the Serializable interface (this requirement is not mandatory for NaturPoint development).
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/class_product.png?raw=true)
+
+In the previous image, corresponding to the source code of the Product class, it can be seen how said class contains a series of annotations on each property that makes up the class (id, name, description, price, quantity, picture, category, orderDetails) in addition of two other annotations on the same class and a constructor without any type of argument as a mandatory requirement for Hibernate to be able to perform persistence.
+
+
+## Annotations
+
+The annotations on the own code written in Java, allow to establish in a more consistent and simple way, at the same time, the mapping information on the Java classes.
+
+The annotations used on the Product class are detailed below:
+
+  - **@Entity** This annotation is placed on the class and indicates that the class is an entity to be persisted. In the image inserted previously, it is observed how the Product class is an entity that is going to be persisted.
+  - **@Table** Another annotation that is placed on the class and indicates the name of the table that it will have in the database where the class will be persisted.
+  - **@Id** Anotación empleada para indicar que éste atributo pertenece a una clave primaria.
+  - **@GeneratedValue(strategy=GenerationType.IDENTITY)** Used to specify that the column corresponding to the attribute in the database will have an automatic increment and that for each insert operation, it will generate a new value.
+  - **@Column(name = “name”)** Applied to a property to indicate the name of the column that it will have in the database. 
+  - **@Lob** It is applied when we need to specify that the database will store a binary data (videos, images or audios).
+  - **@ManyToOne** Using this annotation allows the mapping of one entity to another. The only requirement that must be met is that the other entity is also annotated with the @Entity annotation. In our case, we are creating the relationship that the Product and Category classes will have as we already defined in the E/R diagram in the project analysis phase. In order for the relationship and mapping between entities to take place, the Category entity must include the @OneToMany annotation on the Set<Product> products = new HashSet<>() collection attribute.
+  - **@OneToMany(mappedBy = “product”)** Inside this annotation, we find an attribute called “mappedBy” which will contain the name of the mapping attribute for the association between the Product and OrderDetails entities.
+
+## Data access layer (package repository)
+
+With the design and construction of this layer, it is intended to separate the responsibility that each class has defined and maintain an order so that the application is maintainable.
+
+To do this, a Repository interface will be created that will contain the basic functions that must be implemented in a persistent application against the database, it is what is known in software development as CRUD. These operations are: create (create new records), read (read existing records), update (update existing records) and delete (delete existing records).
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/interface.png?raw=true)
+
+In the methods shown in the image, we find that a generic type (T) has been used, also called parameterized types. This T refers to the object type, or rather, to the Java class, which in our case is a Hibernate Entity.
+
+Making use of generics gives us great versatility when programming since by simply declaring them in the interface, any class that implements it will be able to establish the corresponding type to implement the inherited methods.
+
+
+### HibernateUtils (Singleton pattern)
+
+The singleton is a design pattern that restricts the instantiation of a class to only create one instance of the class that implements it.
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/utils.png?raw=true)
+
+
+
+### CRUD, create method
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/repo_category.png?raw=true)
+
+In the previous image, you can see how the repository for the Category entity has been implemented. It is at this point where we can appreciate the dynamism that the use of an interface with parameterized types gives us, since it transforms the generic into any repository that needs to be created.
+
+In order to carry out transactions against the database, the Session class will be used. This class will be the one that allows us to open the connections and send or receive the data to the database. In the constructor of the class, the openConnection() method of the HibernateUtils class is called so that the session can be started. This step will be required for all repository classes.
+
+Next, we proceed to detail the implementation of the create method for the Category entity:
+
+  - **public void create(Category category)** First, the object is passed to the method as a parameter. In this case, it is an object of type Category.
+  - **session.beginTransaction()** We open the transaction.
+  - **try / catch block** For the management of exceptions that may occur in the code, a try / catch block is used that allows us to capture a possible error and treat it so that the program flow can continue with its execution.
+  - **session.save()** In order to store the information in the database, the save function offered by session is used and the Category object is saved in the DB.
+  - **session.getTransaction.commit()** This function of the session object is used to close the transaction once the object has been successfully saved.
+  - **JoptionPane.showMessageDialog** With the use of this class, we show a window with the information that we have declared when performing the transaction.
+  - **HeadlessException** The type of exception you want to handle.
+  - **session.getTransaction.rollback()** This function of the session object is used when the catch block is executed due to an error in the save operation of the object. What the system does is go back and leave it as it was before making the transaction.
+
+### CRUD, readAll method
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/readAll.png?raw=true)
+
+The objective of implementing this method is to obtain a list with all the categories stored in the database.
+
+  - **public List<Category> readAll()** Method that returns a list of objects of type Category.
+  - **Query<Category>query=session.createQuery(“FROM Category”,Category.class)**
+    Category type query against the DB to receive all the data contained in the class.
+  - **List<Category> categoryList = query.getResultList()** The data obtained in the query is stored in a list of categories.
+  - **return categoryList** The list with all the categories is returned.
+
+### CRUD, update method
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/update.png?raw=true)
+
+The purpose of this method is to update an object of type Category. It will be implemented in the rest of the classes that make up the system since the only thing that must be modified is the type of parameter. Note that its operation is identical to the create method, the only thing that changes is the function of the session object, which in this case is update.
+
+### CRUD, deleteById method
+
+In the following image, a code fragment belonging to the deleteById method of the CategoryRepository class is attached and, as in the previous section, it is notified that the implementation of this method will be common to the rest of the entities. Its functionality will be to be able to eliminate a category from the database by means of its identifier (id).
+
+![App Screenshot](https://github.com/AlPrats/NaturPoint/blob/main/screenshots/deleteById.png?raw=true)
+
+As can be seen in it, its design follows the same pattern used in the previous methods, which is why it omits detailing some processes that are repeated, except for some characteristics that are mentioned below.
+
+  - **public void deleteById(int id)** We pass the id of the object to delete as a parameter.
+  - **session.clear()** This function of the session object clears the cache of the current session.
+  - **Category delete Category = new Category()** A new instance of an object of type Category is created (called deleteCategory to indicate the functionality that this object is going to have).
+  - **deleteCategory.setId(id)** Using the setId method belonging to the Category class, we set the id that we previously passed as a parameter to the deleteById method. In our case, this id will be extracted from a table in the graphical user interface that will contain the entire list of categories.
+  - **session.delete()** Session function that allows deleting an object from the DB. This function, once it is called, what it will do is look for the id that we pass as a parameter and delete the corresponding record in the database.
+
+## Skills
+
+Maven, Java, Hibernate, MySql
+
+
+
+
